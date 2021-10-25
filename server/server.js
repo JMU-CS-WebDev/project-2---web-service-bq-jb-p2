@@ -1,5 +1,5 @@
 const express = require("express");
-const app = express();
+const service = express();
 
 const port = 5000;
 service.listen(port, () => {
