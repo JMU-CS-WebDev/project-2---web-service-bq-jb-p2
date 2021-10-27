@@ -28,3 +28,35 @@ connection.query(selectQuery, (error, rows) => {
 service.listen(port, () => {
   console.log(`We're live on port ${port}!`);
 });
+
+
+
+service.post("/:newEntry", (request, response, next) => {
+  // const parameters = [
+  //   request.body.name,
+  //   request.body.type,
+  //   request.body.genre,
+  //   request.body.score,
+  //   request.body.summary,
+  // ];
+  const parameters = [
+    2, 'Chuck', 'show', 'thriller', 6, 'badshit crazy'
+  ];
+  const insertQuery = 'INSERT INTO productions (p_id, p_name, p_type, p_genre, score, summary) VALUES (?,?,?,?,?,?)';
+
+  connection.query(insertQuery, parameters, (error, result) => {
+    if (error) {
+      response.status(500);
+      response.json({
+        ok: false,
+        results: error.message,
+      });
+    } else {
+      response.json({
+        ok: true,
+        results: 'It worked!',
+      });
+      console.log(response);
+    }
+  });
+});
