@@ -1,0 +1,10 @@
+curl -v \
+--request POST \
+--header 'Content-Type: application/json' \
+--data '{"id": 3,
+         "name": "Dune",
+         "type": "Movie",
+         "genre": "scifi",
+         "score": 9,
+         "summary": "spices everywhere"}' \
+http://localhost:5000/newEntry
