@@ -46,7 +46,7 @@ service.post("/:newEntry", (request, response, next) => {
   // ];
   const insertQuery = 'INSERT INTO productions (p_id, p_name, p_type, p_genre, score, summary) VALUES (?,?,?,?,?,?)';
 
-  connection.query(insertQuery, parameters, (error, result) => {
+  connection.query(insertQuery, parameters, (error) => {
     if (error) {
       response.status(500);
       response.json({
@@ -57,6 +57,31 @@ service.post("/:newEntry", (request, response, next) => {
       response.json({
         ok: true,
         results: 'It worked!',
+      });
+      console.log(response);
+    }
+  });
+});
+
+
+// returns the movies
+service.get('/type/:prodType', (request, response) => {
+  const parameters = [
+    request.params.prodType,
+  ];
+
+  const query = 'SELECT * FROM productions WHERE p_type = ? ORDER BY score';
+  connection.query(query, parameters, (error, rows) => {
+    if (error) {
+      response.status(500);
+      response.json({
+        ok: false,
+        result: error.message,
+      });
+    } else {
+      response.json({
+        ok: true,
+        result: rows,
       });
       console.log(response);
     }

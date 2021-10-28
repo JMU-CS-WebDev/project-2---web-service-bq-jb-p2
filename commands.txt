@@ -8,3 +8,6 @@ curl -v \
          "score": 9,
          "summary": "spices everywhere"}' \
 http://localhost:5000/newEntry
+
+
+curl -v localhost:5000/Movie
