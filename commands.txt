@@ -13,3 +13,19 @@ http://localhost:5000/newEntry
 
 -- gets all movies or all shows --
 curl -v localhost:5000/type/Movie
+
+-- update productions table --
+curl -v \
+--request PATCH \
+--header 'Content-Type: application/json' \
+--data '{"name": "Step Brothers",
+         "type": "Movie",
+         "genre": "Comedy",
+         "score": 7,
+         "summary": "Two brothers dont get along then they do. drumset is involved"}' \
+http://localhost:5000/prod/3
+
+-- delete row --
+curl -v \
+--request DELETE \
+http://localhost:5000/www/8

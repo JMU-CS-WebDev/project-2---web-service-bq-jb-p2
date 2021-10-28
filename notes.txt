@@ -1,0 +1,14 @@
+On droplet:
+-install node
+-install mysql
+-create database and such
+-
+
+
+nginx configuration  -
+
+nginx installed
+in config file
+where are the certificates? sudo ls /etc/letsencrypt/live
+change serverName project2.jacksonsblog.me
+make sure proxy_pass port is the same port as server.js

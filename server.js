@@ -31,7 +31,7 @@ service.listen(port, () => {
 });
 
 
-// inserts a new entry for a production
+// inserts a new entry for a production  CREATE
 service.post("/newEntry", (request, response, next) => {
   const parameters = [
     request.body.id,
@@ -61,7 +61,7 @@ service.post("/newEntry", (request, response, next) => {
 });
 
 
-// returns all productions that are either a movie or a show
+// returns all productions that are either a movie or a show  READ
 service.get('/type/:prodType', (request, response) => {
   const parameters = [
     request.params.prodType,
@@ -81,6 +81,54 @@ service.get('/type/:prodType', (request, response) => {
         result: rows,
       });
       console.log(response);
+    }
+  });
+});
+
+// UPDATE
+service.patch('/prod/:id', (request, response) => {
+  const parameters = [
+    request.body.name,
+    request.body.type,
+    request.body.genre,
+    request.body.score,
+    request.body.summary,
+    parseInt(request.params.id),
+  ];
+
+  const query = 'UPDATE productions SET p_name = ?, p_type = ?, p_genre = ?, score = ?, summary = ? WHERE p_id = ?';
+  connection.query(query, parameters, (error) => {
+    if (error) {
+      response.status(404);
+      response.json({
+        ok: false,
+        results: error.message,
+      });
+    } else {
+      response.json({
+        ok: true,
+      });
+    }
+  });
+});
+
+
+// DELETE
+service.delete('/prodDelete/:id', (request, response) => {
+  const parameters = [parseInt(request.params.id)];
+
+  const query = 'DELETE FROM productions WHERE p_id = ?';
+  connection.query(query, parameters, (error) => {
+    if (error) {
+      response.status(404);
+      response.json({
+        ok: false,
+        results: error.message,
+      });
+    } else {
+      response.json({
+        ok: true,
+      });
     }
   });
 });
