@@ -31,8 +31,8 @@ service.listen(port, () => {
 });
 
 
-
-service.post("/:newEntry", (request, response, next) => {
+// inserts a new entry for a production
+service.post("/newEntry", (request, response, next) => {
   const parameters = [
     request.body.id,
     request.body.name,
@@ -41,9 +41,6 @@ service.post("/:newEntry", (request, response, next) => {
     request.body.score,
     request.body.summary,
   ];
-  // const parameters = [
-  //   2, 'Chuck', 'show', 'thriller', 6, 'badshit crazy'
-  // ];
   const insertQuery = 'INSERT INTO productions (p_id, p_name, p_type, p_genre, score, summary) VALUES (?,?,?,?,?,?)';
 
   connection.query(insertQuery, parameters, (error) => {
@@ -64,7 +61,7 @@ service.post("/:newEntry", (request, response, next) => {
 });
 
 
-// returns the movies
+// returns all productions that are either a movie or a show
 service.get('/type/:prodType', (request, response) => {
   const parameters = [
     request.params.prodType,

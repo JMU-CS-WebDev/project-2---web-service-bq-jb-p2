@@ -1,3 +1,5 @@
+-- post for inserting to database --
+
 curl -v \
 --request POST \
 --header 'Content-Type: application/json' \
@@ -9,5 +11,5 @@ curl -v \
          "summary": "spices everywhere"}' \
 http://localhost:5000/newEntry
 
-
-curl -v localhost:5000/Movie
+-- gets all movies or all shows --
+curl -v localhost:5000/type/Movie
