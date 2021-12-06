@@ -30,6 +30,29 @@ service.listen(port, () => {
   console.log(`We're live on port ${port}!`);
 });
 
+// gets all reviews
+service.get('/productions', (request, response) => {
+  const parameters = [
+    request.params
+  ];
+
+  const query = 'SELECT * FROM productions ORDER BY score';
+  connection.query(query, parameters, (error, rows) => {
+    if (error) {
+      response.status(500);
+      response.json({
+        ok: false,
+        result: error.message,
+      });
+    } else {
+      response.json({
+        ok: true,
+        result: rows,
+      });
+      console.log(response);
+    }
+  });
+});
 
 // inserts a new entry for a production  CREATE
 service.post("/newEntry", (request, response, next) => {
