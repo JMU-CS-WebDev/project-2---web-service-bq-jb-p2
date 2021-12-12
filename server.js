@@ -17,13 +17,25 @@ connection.connect((error) => {
   }
 });
 
-const selectQuery = 'SELECT * FROM productions';
-connection.query(selectQuery, (error, rows) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log(rows);
-  }
+// const selectQuery = 'SELECT * FROM productions';
+// connection.query(selectQuery, (error, rows) => {
+//   if (error) {
+//     console.error(error);
+//   } else {
+//     console.log(rows);
+//   }
+// });
+
+service.use((request, response, next) => {
+  response.set('Access-Control-Allow-Origin', '*');
+  response.setHeader("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
+service.options('*', (request, response) => {
+  response.set('Access-Control-Allow-Headers', 'Content-Type');
+  response.set('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
+  response.sendStatus(200);
 });
 
 service.listen(port, () => {
@@ -57,14 +69,13 @@ service.get('/productions', (request, response) => {
 // inserts a new entry for a production  CREATE
 service.post("/newEntry", (request, response, next) => {
   const parameters = [
-    request.body.id,
     request.body.name,
     request.body.type,
     request.body.genre,
     request.body.score,
     request.body.summary,
   ];
-  const insertQuery = 'INSERT INTO productions (p_id, p_name, p_type, p_genre, score, summary) VALUES (?,?,?,?,?,?)';
+  const insertQuery = 'INSERT INTO productions (p_name, p_type, p_genre, score, summary) VALUES (?,?,?,?,?)';
 
   connection.query(insertQuery, parameters, (error) => {
     if (error) {
