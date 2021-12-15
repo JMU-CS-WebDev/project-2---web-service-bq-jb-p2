@@ -1,7 +1,7 @@
 const express = require("express");
 const service = express();
 service.use(express.json());
-const port = 5000;
+const port = 5001;
 
 const fs = require("fs");
 const mysql = require("mysql");
@@ -79,7 +79,7 @@ service.post("/newEntry", (request, response, next) => {
 
   connection.query(insertQuery, parameters, (error) => {
     if (error) {
-      response.status(500);
+      // response.status(500);
       response.json({
         ok: false,
         results: error.message,
